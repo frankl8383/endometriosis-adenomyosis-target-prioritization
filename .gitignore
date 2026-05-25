@@ -1,0 +1,36 @@
+# Raw public data and large downloaded inputs
+data/raw_downloads/
+data/raw_metadata/
+external_data/
+*.h5ad
+*.h5
+*.tar
+*.tar.gz
+*.fastq
+*.fastq.gz
+
+# Local caches and scratch outputs
+tools/
+cache/
+tmp/
+*.partial
+*.aria2
+raw_*.jsonl
+raw_*.json
+
+# Rendered submission artifacts
+*.docx
+*.pdf
+rendered_*_docx/
+rendered_docx_contact_sheets/
+
+# Generated figures/results may be regenerated from scripts
+results/
+figures/*.png
+figures/*.svg
+
+# System/editor files
+.DS_Store
+__pycache__/
+.ipynb_checkpoints/
+.generated_by_build_minimal_github_repo

@@ -1,0 +1,11 @@
+numpy
+pandas
+scipy
+h5py
+anndata
+matplotlib
+seaborn
+openpyxl
+xlrd
+Pillow
+python-docx

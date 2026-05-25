@@ -1,0 +1,20 @@
+name: endo-adeno-target-prioritization
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.12
+  - numpy
+  - pandas
+  - scipy
+  - h5py
+  - anndata
+  - matplotlib
+  - seaborn
+  - openpyxl
+  - xlrd
+  - pillow
+  - python-docx
+  - r-base
+  - bioconductor-edger
+  - bioconductor-limma

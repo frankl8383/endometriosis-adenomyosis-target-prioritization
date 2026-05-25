@@ -1,0 +1,13 @@
+role	accession_or_resource	disease	data_type	primary_question	phase0_status	source_url
+genetics	Nature Genetics 2026 endometriosis/adenomyosis GWAS	endometriosis;adenomyosis	GWAS summary statistics	Which loci and genes have genetic support, and which are shared across diseases?	to_verify	https://www.nature.com/articles/s41588-026-02582-2
+single_cell	GSE213216	endometriosis	scRNA-seq	Which cell states express prioritized genes across lesion sites?	to_verify	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE213216
+single_cell	GSE179640	endometriosis	scRNA-seq;bulk RNA-seq;imaging mass cytometry	Can prioritized targets be validated in an independent lesion atlas?	to_verify	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE179640
+single_cell	GSE203191	endometriosis	menstrual effluent scRNA-seq	Do non-invasive endometrial/immune phenotypes support candidates?	to_verify	https://www.omicsdi.org/dataset/geo/GSE203191
+bulk	GSE51981	endometriosis	microarray	Can disease/stage expression signatures validate candidates?	to_verify	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE51981
+bulk	GSE141549	endometriosis	microarray/RNA expression	Can deep infiltrating endometriosis and lesion-type contrasts validate candidates?	to_verify	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE141549
+bulk	GSE234354	endometriosis	bulk RNA-seq	Can endometrial function/deconvolution context validate candidates?	to_verify	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE234354
+bulk	GSE313775	endometriosis	sorted Th1/Th17 bulk RNA-seq	Do immune-cell transcriptomes support IL-17/IL-23 or related target mechanisms?	to_verify	https://www.omicsdi.org/dataset/geo/GSE313775
+single_cell_spatial	STTT 2025 PRLR adenomyosis paper	adenomyosis	scRNA-seq	Which adenomyosis cell states overlap with endometriosis candidates?	to_verify	https://www.nature.com/articles/s41392-025-02339-z
+single_cell_spatial	HRA005777	adenomyosis	scRNA-seq;spatial transcriptomics	Can public adenomyosis spatial/single-cell data validate vascular/fibrotic targets?	to_verify	https://academic.oup.com/proteincell/article/15/7/530/7629185
+target_evidence	Open Targets	endometriosis;adenomyosis	target-disease evidence	Which prioritized genes have tractability, known drugs, or safety concerns?	later	https://platform.opentargets.org/
+

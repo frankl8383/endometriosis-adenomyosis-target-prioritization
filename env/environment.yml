@@ -14,7 +14,6 @@ dependencies:
   - openpyxl
   - xlrd
   - pillow
-  - python-docx
   - r-base
   - bioconductor-edger
   - bioconductor-limma

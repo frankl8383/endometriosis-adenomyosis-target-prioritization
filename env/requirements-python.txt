@@ -8,4 +8,3 @@ seaborn
 openpyxl
 xlrd
 Pillow
-python-docx

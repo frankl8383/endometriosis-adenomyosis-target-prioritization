@@ -365,7 +365,7 @@ def main() -> int:
         "",
         "## Decision",
         "",
-        "Use this matrix as the current authoritative cross-disease single-cell localization layer for downstream druggability-aware target prioritization.",
+        "Use this matrix for downstream cross-disease cell-context scoring.",
     ]
     OUT_REVIEW.write_text("\n".join(review) + "\n", encoding="utf-8")
     print(OUT_SUMMARY)

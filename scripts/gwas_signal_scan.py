@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Initial canonical GWAS signal scan.
 
-This script deliberately stops short of locus definition because the downloaded
+This script stops short of locus definition because the downloaded
 GWAS files provide rsIDs but not chromosome/base-pair coordinates. It generates
 threshold counts, lambda GC and top-SNP tables that can be used after SNP
 coordinate mapping and LD clumping are added.

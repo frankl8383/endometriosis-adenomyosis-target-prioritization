@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Create draft manuscript Figures 1-5 from audited project outputs."""
+"""Create Figures 1-5."""
 
 from __future__ import annotations
 
@@ -698,13 +698,13 @@ def write_self_review() -> tuple[str, list[str]]:
                 failures.append(f"{name} SVG lacks editable text nodes.")
             bad_spatial = "spatial evidence" in svg_text.lower() and "not spatial evidence" not in svg_text.lower()
             if bad_spatial:
-                failures.append(f"{name} may imply spatial evidence without the not-spatial guardrail.")
+                failures.append(f"{name} may imply spatial evidence without the not-spatial note.")
         if png.exists():
             frac = image_nonblank_fraction(png)
             if frac < 0.02:
                 failures.append(f"{name} PNG appears nearly blank; non-white fraction={frac:.4f}.")
     if not CAPTIONS.exists() or "not spatial evidence" not in CAPTIONS.read_text(encoding="utf-8").lower():
-        failures.append("Captions missing or lack adenomyosis not-spatial guardrail.")
+        failures.append("Captions missing or lack adenomyosis not-spatial note.")
     required_data = [
         FIGURES / "figure1_study_design_audit_data.tsv",
         FIGURES / "figure2_genetic_candidate_universe_data.tsv",
@@ -734,7 +734,7 @@ def write_self_review() -> tuple[str, list[str]]:
     lines.extend(
         [
             "",
-            "## Scientific guardrails",
+            "## Claim limits",
             "",
             "- Figure 1 separates evidence resources from interpretation gates.",
             "- Figure 2 labels outputs as coordinate-window candidates rather than causal loci.",
@@ -748,7 +748,7 @@ def write_self_review() -> tuple[str, list[str]]:
         lines.extend(["## Failures", ""])
         lines.extend(f"- {failure}" for failure in failures)
     else:
-        lines.extend(["## Decision", "", "The draft Figures 1-5 pass automated output, readability and overclaim checks."])
+        lines.extend(["## Decision", "", "Figures 1-5 passed output and readability checks."])
     SELF_REVIEW.write_text("\n".join(lines) + "\n", encoding="utf-8")
     return status, failures
 

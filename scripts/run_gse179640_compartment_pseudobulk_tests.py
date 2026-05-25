@@ -2,7 +2,7 @@
 """Donor-aware broad-compartment pseudobulk tests for GSE179640 candidates.
 
 This analysis uses sample-level candidate summaries from the conservative
-broad-compartment annotation step. It deliberately treats subjects, not cells,
+broad-compartment annotation step. It uses subjects, not cells,
 as the statistical units and should be interpreted as a candidate triage layer,
 not as final cluster/state-level differential expression.
 """
@@ -401,7 +401,7 @@ def write_summary(subject_df: pd.DataFrame, tests: pd.DataFrame, support: pd.Dat
     lines = [
         "# GSE179640 donor-aware broad-compartment pseudobulk summary",
         "",
-        "## Inputs and guardrail",
+        "## Inputs and limits",
         "",
         f"- Input table: `{INPUT}`",
         f"- Minimum cells per subject-compartment-sample: {MIN_CELLS_PER_COMPARTMENT_SAMPLE}",
@@ -514,14 +514,14 @@ def write_self_review(tests: pd.DataFrame, support: pd.DataFrame) -> None:
         f"- Tested {n_tests} gene/compartment/comparison/metric rows using subject-level region aggregates.",
         f"- Produced one donor-aware pseudobulk support row for {n_genes} candidate genes with at least one testable broad-compartment signal.",
         "- The script uses subject-level summaries and paired tests where lesion and eutopic samples are available from the same endometriosis subject.",
-        "- Results explicitly retain a guardrail that broad compartments are not final disease cell states.",
+        "- Results label broad compartments as context, not final disease cell states.",
         "",
         "## Scientific limitations",
         "",
         "- Control eutopic coverage is only three subjects in the GSE179640 primary tissue subset, so control comparisons are low-powered.",
         "- Candidate expression was summarized as candidate counts per compartment cell and prevalence; this is not a full transcriptome count matrix per pseudobulk sample with library-size normalization.",
         "- Broad compartments were assigned by conservative marker panels rather than author-provided labels, graph clusters, or supervised reference mapping.",
-        "- Multiple-testing correction is provided, but nominal signals should only be used as supporting evidence in a layered framework.",
+        "- Multiple-testing correction is provided; nominal signals are descriptive.",
         "- This analysis does not replace future cluster-level annotation, doublet-aware validation, or cross-dataset adenomyosis comparison.",
         "",
         "## Quantitative audit",
@@ -532,11 +532,11 @@ def write_self_review(tests: pd.DataFrame, support: pd.DataFrame) -> None:
         "",
         "## Decision",
         "",
-        "This step improves rigor over cell-level summaries because the statistical unit is the subject. It is acceptable as an intermediate evidence layer for target prioritization, but all manuscript wording must describe it as donor-aware broad-compartment pseudobulk triage rather than definitive cell-state differential expression.",
+        "Use these results as donor-aware broad-compartment context, not definitive cell-state differential expression.",
         "",
         "## Next gate",
         "",
-        "Audit the Zenodo 17078290 adenomyosis h5ad as soon as the background download completes; then build the corresponding adenomyosis candidate localization layer for shared/specific comparison.",
+        "Next: summarize the adenomyosis h5ad candidate context matrix.",
     ]
     OUT_REVIEW.write_text("\n".join(lines) + "\n", encoding="utf-8")
 

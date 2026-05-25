@@ -282,7 +282,7 @@ def main() -> int:
             "",
             "- QC-filtered detectability is more defensible than raw barcode detectability, but it is still not cell-type localization.",
             "- The result supports prioritizing measurable candidate genes for downstream annotated-cell-state analysis.",
-            "- Genes with low prevalence after QC should be treated carefully in single-cell localization and may rely more on bulk/spatial or adenomyosis evidence.",
+            "- Low-prevalence genes need support from other data layers.",
             "",
         ]
     )

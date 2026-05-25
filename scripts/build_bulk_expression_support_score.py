@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Create a transparent candidate-level bulk expression support score."""
+"""Create a candidate-level bulk expression support score."""
 
 from __future__ import annotations
 
@@ -216,7 +216,7 @@ def main() -> int:
     lines = [
         "# Bulk expression support score summary",
         "",
-        "This is an intermediate evidence layer, not the final therapeutic target score.",
+        "This is an intermediate support score, not the final score.",
         "",
         f"Candidate rows scored: {len(out)}",
         f"High bulk support: {class_counts.get('high_bulk_support', 0)}",

@@ -181,7 +181,7 @@ def build_queries(stable_genes: list[str]) -> dict[str, dict[str, str]]:
     for name, query in MECHANISM_QUERIES.items():
         queries[f"mechanism_{name}"] = {"category": "mechanism", "gene": "", "query": query}
     queries["disease_target_prioritization"] = {
-        "category": "framework",
+        "category": "general",
         "gene": "",
         "query": "(endometriosis[Title/Abstract] OR adenomyosis[Title/Abstract]) AND (\"drug target\"[Title/Abstract] OR \"therapeutic target\"[Title/Abstract] OR \"target prioritization\"[Title/Abstract] OR \"multi-omics\"[Title/Abstract])",
     }

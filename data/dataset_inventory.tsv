@@ -1,9 +1,0 @@
-resource	data_type	url
-Zenodo 18983492	GWAS summary statistics	https://zenodo.org/records/18983492
-GSE141549	bulk expression	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE141549
-GSE51981	bulk expression	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE51981
-GSE234354	bulk RNA-seq	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE234354
-GSE313775	sorted T-cell RNA-seq	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE313775
-GSE179640	single-cell RNA-seq	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE179640
-GSE203191	menstrual-effluent single-cell metadata	https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE203191
-Zenodo 17078290	adenomyosis h5ad	https://zenodo.org/records/17078290

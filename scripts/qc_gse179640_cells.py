@@ -308,7 +308,7 @@ def main() -> int:
             "Verdict: **PASS_WITH_CONDITIONS**",
             "",
             "- This QC layer uses Cell Ranger filtered barcodes as input and calculates independent per-cell QC metrics before any clustering.",
-            "- The adaptive QC gate is intentionally conservative for heterogeneous surgical tissues; it is a proposed analysis gate, not a claim that all other cells are artifacts.",
+            "- The adaptive QC gate is conservative for heterogeneous surgical tissues; it is not a claim that all other cells are artifacts.",
             "- Doublet detection and cell-type annotation are still missing; downstream cell-state localization must not proceed without those steps or an explicitly conservative alternative.",
             "- Donor/sample metadata are preserved for later pseudobulk and donor-aware summaries.",
             "",

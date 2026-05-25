@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Create manuscript-facing shortlist tables and Figure 6 draft."""
+"""Create shortlist tables and Figure 6."""
 
 from __future__ import annotations
 

@@ -221,8 +221,8 @@ def main() -> int:
         "",
         "- The v2 matrix no longer ranks candidates using detectability/localization alone; subject-level pseudobulk support is incorporated.",
         "- Genes with high broad-compartment detectability but weak donor-aware evidence are explicitly separated from moderate/strong donor-aware support.",
-        "- Strong donor-aware support is intentionally reserved for q<=0.10 pseudobulk evidence; relaxed q<=0.20 evidence is labeled moderate.",
-        "- All rows retain a guardrail that GSE179640 evidence is broad-compartment triage, not final cell-state differential expression.",
+        "- Strong donor-aware support requires q<=0.10 pseudobulk evidence; relaxed q<=0.20 evidence is labeled moderate.",
+        "- GSE179640 evidence is broad-compartment context, not final cell-state differential expression.",
         "",
         "## Conditions",
         "",
@@ -232,7 +232,7 @@ def main() -> int:
         "",
         "## Decision",
         "",
-        "Use `GSE179640_singlecell_candidate_evidence_matrix_v2.tsv` as the current authoritative GSE179640 candidate-localization layer for downstream scoring. Keep the older matrix as an audit trail.",
+        "Use `GSE179640_singlecell_candidate_evidence_matrix_v2.tsv` for downstream scoring.",
     ]
     OUT_REVIEW.write_text("\n".join(review_lines) + "\n", encoding="utf-8")
     print(OUT_SUMMARY)

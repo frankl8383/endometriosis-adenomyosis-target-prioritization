@@ -743,7 +743,7 @@ def write_review(scores: pd.DataFrame) -> None:
     if max_final > 100:
         failures.append(f"Final preliminary score exceeds 100: {max_final}.")
     if scores["actionability_guardrail"].astype(str).str.len().min() == 0:
-        failures.append("One or more rows lack an actionability guardrail.")
+        failures.append("One or more rows lack an actionability note.")
     if int(scores["druggability_penalty_points"].gt(0).sum()) == 0:
         failures.append("No penalty was applied to any gene; check whether penalties are too permissive.")
 
@@ -779,7 +779,7 @@ def write_review(scores: pd.DataFrame) -> None:
             [
                 "## Decision",
                 "",
-                "The actionability scoring layer passes automated range and guardrail checks. It is ready for rank-stability sensitivity analysis and manual target-direction review.",
+                "The actionability scoring layer passed range checks and can be used for rank-stability analysis and manual review.",
             ]
         )
     REVIEW.write_text("\n".join(lines) + "\n", encoding="utf-8")

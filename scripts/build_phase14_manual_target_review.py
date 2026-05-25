@@ -50,7 +50,7 @@ CURATION = {
         "literature_level": "genetic_and_angiogenesis_axis_support",
         "selected_pmids": ["27453397", "23635398", "26773192", "37210898", "39595579"],
         "manual_safety": "high_systemic_antiangiogenic_caution",
-        "manual_rationale": "KDR has genetic and fibrovascular cell-context support, but systemic VEGFR2 inhibition has major vascular, wound-healing and reproductive safety concerns; manuscript claims should emphasize local/short-term modulation or use KDR as a fibrovascular signal rather than a simple repurposing target.",
+        "manual_rationale": "KDR has genetic and fibrovascular cell-context support, but systemic VEGFR2 inhibition has major vascular, wound-healing and reproductive safety concerns; keep it as a fibrovascular signal unless local or short-term perturbation is tested.",
         "claim_strength": "strong_biology_high_safety_caution",
     },
     "LY96": {
@@ -140,7 +140,7 @@ CURATION = {
         "literature_level": "uterine_ECM_marker_support_little_direct_target_support",
         "selected_pmids": ["15214943", "27619726", "42175707"],
         "manual_safety": "basement_membrane_structural_marker_not_actionable",
-        "manual_rationale": "HSPG2/perlecan is a strong fibrovascular/ECM niche marker in this project, but lacks direct drug precedent and should not be overclaimed as a direct therapeutic target.",
+        "manual_rationale": "HSPG2/perlecan is a strong fibrovascular/ECM marker here, but lacks direct drug precedent and is not treated as a direct therapeutic target.",
         "claim_strength": "strong_context_marker",
     },
     "SSPN": {
@@ -303,7 +303,7 @@ def main() -> int:
             "",
             "## Secondary or Context Use",
             "",
-            "| tier | gene | manuscript use | reason |",
+            "| tier | gene | use | reason |",
             "| --- | --- | --- | --- |",
         ]
     )
@@ -393,7 +393,7 @@ def main() -> int:
             [
                 "## Decision",
                 "",
-                "Manual directionality/safety review passes the predefined guardrails. Use this table as the input for final Figure 6/table shortlist drafting, while preserving explicit caveats.",
+                "Manual directionality/safety review passed. Use this table for Figure 6 and the shortlist table.",
             ]
         )
     OUT_SELF_REVIEW.write_text("\n".join(review_lines) + "\n", encoding="utf-8")

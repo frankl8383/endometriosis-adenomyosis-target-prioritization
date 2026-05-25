@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build a manuscript-facing preliminary target priority matrix."""
+"""Build the preliminary priority matrix."""
 
 from __future__ import annotations
 
@@ -152,7 +152,7 @@ def write_summary(df: pd.DataFrame) -> None:
     lines.extend(
         [
             "",
-            "## Main-text marker/context genes not to overclaim as direct targets",
+            "## Main-text marker/context genes not treated as direct targets",
             "",
             "| rank | gene | score | reason | role |",
             "| ---: | --- | ---: | --- | --- |",
@@ -208,7 +208,7 @@ def write_review(df: pd.DataFrame) -> None:
 
     status = "PASS" if not failures else "FAIL"
     lines = [
-        "# Phase 12 self-review: preliminary target priority matrix",
+        "# Preliminary priority matrix check",
         "",
         f"Status: {status}",
         "",
@@ -220,18 +220,18 @@ def write_review(df: pd.DataFrame) -> None:
         f"- Tier-1 biologic marker/context genes: {int((df['priority_tier'] == 'tier_1_biologic_marker_or_context_gene_not_direct_target').sum())}",
         f"- Shortlist review candidates: {int(df['suggested_shortlist_label'].str.startswith('shortlist').sum())}",
         "",
-        "## Guardrails",
+        "## Limits",
         "",
-        "- Preliminary target rank is not a final therapeutic recommendation.",
+        "- Preliminary rank is not a treatment recommendation.",
         "- Direct-target tiering requires druggability support; biology-only markers are explicitly separated.",
-        "- This matrix should feed rank-stability and manual directionality review before a final manuscript shortlist is declared.",
+        "- Use this matrix before rank-stability and manual review.",
         "",
     ]
     if failures:
         lines.extend(["## Failures", ""])
         lines.extend(f"- {failure}" for failure in failures)
     else:
-        lines.extend(["## Decision", "", "The matrix passes automated scientific guardrail checks for use in downstream rank-stability analysis."])
+        lines.extend(["## Decision", "", "The matrix passed checks for downstream rank-stability analysis."])
     OUT_REVIEW.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 

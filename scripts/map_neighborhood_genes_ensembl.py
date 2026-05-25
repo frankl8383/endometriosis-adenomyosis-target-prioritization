@@ -248,9 +248,9 @@ def write_outputs(rows: list[dict[str, str]]) -> None:
     lines.extend(
         [
             "",
-            "## Interpretation Gate",
+            "## Interpretation",
             "",
-            "Use these genes as positional candidates for MAGMA/TWAS/eQTL/druggability integration. Do not rank therapeutic targets from positional overlap alone.",
+            "These are positional candidates. Do not infer target genes from overlap alone.",
             "",
             "## Output",
             "",

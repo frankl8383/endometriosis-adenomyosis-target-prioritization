@@ -1,11 +1,8 @@
-# Endometriosis and adenomyosis analysis code
+# Analysis code
 
-Code for the public-data analysis in:
+Code for the endometriosis and adenomyosis public-data analysis.
 
-`Genetics-guided cell-contextual prioritisation of experimental hypotheses in endometriosis and adenomyosis`
-
-This repository contains code, environment files and public-data download lists.
-It does not store the manuscript or downloaded datasets.
+No manuscript files or downloaded datasets are stored here.
 
 ## Run
 

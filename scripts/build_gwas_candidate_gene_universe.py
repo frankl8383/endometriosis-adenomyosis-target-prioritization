@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build a GWAS-derived candidate gene universe for expression validation.
 
-This is intentionally a candidate universe, not a target shortlist. It combines
+This is a candidate universe, not a target shortlist. It combines
 shared coordinate-window neighborhoods, Ensembl pairwise LD sensitivity classes
 and positional protein-coding gene overlap.
 """

@@ -423,7 +423,7 @@ def write_summary(metadata_stats: list[dict[str, object]], extraction_stats: lis
         "",
         "- GSE234354 is retained as a menstrual-cycle reference dataset, not as disease/control evidence.",
         "- GSE313775 is usable for donor-aware Th-subset immune validation; matrix columns do not contain GSM IDs, so donor-to-GEO mapping is recorded as an order-based audit assumption.",
-        "- GSE141549 is usable for lesion/endometrium/peritoneum candidate-expression validation; tissue-code labels are preliminary and should be cross-checked against the Scientific Data descriptor before manuscript wording.",
+        "- GSE141549 is usable for lesion/endometrium/peritoneum candidate-expression checks; tissue-code labels should be checked against the Scientific Data descriptor.",
         "- GSE51981 is now usable for independent endometrium validation after official GPL570 annotation; multi-gene probes are retained with flags and should be sensitivity-filtered.",
         "",
     ]
@@ -447,7 +447,7 @@ def write_self_review(metadata_stats: list[dict[str, object]], extraction_stats:
     verdict = "PASS_WITH_CONDITIONS"
     conditions = [
         "GSE313775 disease/control and Th-subset metadata are now recoverable, but the raw count matrix uses EDCV donor IDs rather than GEO GSM IDs; retain the order-based mapping assumption in methods and sensitivity notes.",
-        "GSE141549 sample-code tissue labels must be cited to the dataset descriptor before final manuscript claims.",
+        "Check GSE141549 tissue labels against the dataset descriptor before final interpretation.",
         "GSE51981 probe-to-gene annotation is available; final validation should report a sensitivity analysis excluding multi-gene probes.",
     ]
     if int(gse313775.get("matched_samples", 0)) != int(gse313775.get("matrix_sample_columns", -1)):

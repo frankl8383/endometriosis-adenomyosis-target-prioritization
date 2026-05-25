@@ -353,7 +353,7 @@ self_review <- c(
   "- Microarray datasets were analyzed as normalized continuous expression with limma.",
   "- Model outputs are limited to the GWAS-prioritized candidate universe.",
   "",
-  "Conditions before manuscript-level interpretation:",
+  "Conditions before interpretation:",
   "",
   "- GSE141549 tissue-code definitions remain preliminary until explicitly tied to the Scientific Data descriptor.",
   "- GSE313775 donor-to-GSM mapping depends on matrix donor order matching GEO biological replicate order.",

@@ -3,9 +3,9 @@ Supplementary Data 1	supplementary_full_matrices/gwas_candidate_gene_universe.ts
 Supplementary Data 2	supplementary_full_matrices/coordinate_window_neighborhoods.tsv	Coordinate-window neighbourhood definitions and phenotype overlap
 Supplementary Data 3	supplementary_full_matrices/ensembl_pairwise_ld_sensitivity.tsv	Pairwise EUR LD sensitivity for overlapping lead SNPs
 Supplementary Data 4	supplementary_full_matrices/bulk_candidate_expression_support_scores.tsv	Full candidate-level bulk expression support matrix
-Supplementary Data 5	supplementary_full_matrices/cross_disease_singlecell_localization_matrix.tsv	Full cross-disease single-cell/cell-label context matrix
+Supplementary Data 5	supplementary_full_matrices/cross_disease_singlecell_celllabel_context_matrix.tsv	Full cross-disease single-cell/cell-label context matrix
 Supplementary Data 6	supplementary_full_matrices/GSE179640_singlecell_candidate_evidence_matrix_v2.tsv	Endometriosis broad-compartment candidate context matrix
-Supplementary Data 7	supplementary_full_matrices/Zenodo17078290_candidate_localization_matrix.tsv	Adenomyosis h5ad cell-label candidate context matrix
+Supplementary Data 7	supplementary_full_matrices/Zenodo17078290_candidate_celllabel_context_matrix.tsv	Adenomyosis h5ad cell-label candidate context matrix
 Supplementary Data 8	supplementary_full_matrices/target_actionability_scores.tsv	Full targetability and druggability evidence matrix
 Supplementary Data 9	supplementary_full_matrices/preliminary_target_priority_matrix.tsv	Full 100-point scoring matrix before manual review
 Supplementary Data 10	supplementary_full_matrices/rank_stability_combined_matrix.tsv	Combined rank-stability diagnostics

@@ -476,7 +476,7 @@ def make_figure4(s: dict[str, object]) -> None:
     ]
     ax3.bar(labels, vals, color=[PALETTE["singlecell"], "#E6BD72", "#F0D49A", PALETTE["neutral_1"], PALETTE["neutral_2"]], edgecolor="white")
     ax3.set_ylabel("Genes")
-    ax3.set_title("Adenomyosis h5ad cell-label context\n(scRNA labels; not spatial evidence)")
+    ax3.set_title("Adenomyosis h5ad cell-label context\nn=3/group; no spatial coordinates")
     ax3.tick_params(axis="x", rotation=20)
     for i, v in enumerate(vals):
         ax3.text(i, v + 1.0, str(v), ha="center", fontsize=8)
@@ -668,7 +668,7 @@ def write_captions() -> None:
 
 **Figure 3. Candidate-level bulk expression support across lesion, immune and cycle-control layers.** Bulk models were restricted to the genetics-derived candidate universe. GSE234354 was used as a menstrual-cycle confounding-control layer rather than disease evidence.
 
-**Figure 4. Broad-compartment and h5ad cell-label context evidence across endometriosis and adenomyosis resources.** GSE179640 supports broad-compartment context evidence in endometriosis, while Zenodo 17078290 supports adenomyosis scRNA/cell-label context evidence. These panels do not claim final cluster-level differential expression, and the adenomyosis h5ad is not spatial evidence.
+**Figure 4. Broad-compartment and h5ad cell-label context evidence across endometriosis and adenomyosis resources.** GSE179640 supports broad-compartment context evidence in endometriosis, while Zenodo 17078290 supports adenomyosis scRNA/cell-label context evidence. The adenomyosis h5ad layer has n=3 samples per group and no usable spatial coordinates in the local audit. These panels do not claim final cluster-level differential expression, and the adenomyosis h5ad is not spatial evidence.
 
 **Figure 5. Cross-resource cell-context overlap before targetability filtering.** The integrated cell-context matrix identifies broad fibrovascular, epithelial and immune candidate patterns that feed into Figure 6 scoring, where targetability, safety and directionality are added.
 """

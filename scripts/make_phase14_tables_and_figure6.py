@@ -212,7 +212,7 @@ def layer_summary(row: pd.Series) -> str:
 def interpretation(row: pd.Series) -> str:
     gene = str(row["gene_symbol"])
     if gene == "KDM1A":
-        return "Epithelial-epigenetic experimental hypothesis; inhibit LSD1/KDM1A."
+        return "Epithelial-epigenetic model-system hypothesis; test KDM1A/LSD1 perturbation, including inhibition."
     if gene == "LY96":
         return "MD-2/TLR4 pathway-level immune hypothesis; LY96-specific evidence remains limited."
     if gene == "PDGFRA":
@@ -308,14 +308,15 @@ def write_tables(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
     soften_table_text(shortlist[shortlist_cols]).to_csv(OUT_SHORTLIST_TSV, sep="\t", index=False)
 
     md_lines = [
-        "| category | gene | mapping note | score/stability | axis | final claim | interpretation | main caution |",
-        "| --- | --- | --- | --- | --- | --- | --- | --- |",
+        "| category | gene | mapping note | evidence/stability | permitted claim | main caution |",
+        "| --- | --- | --- | --- | --- | --- |",
     ]
     for _, row in shortlist.iterrows():
         score_text = (
             f"{float(row['final_target_priority_score_100_pre_rank_stability']):.1f}; "
             f"{stability_label(row['rank_stability_class'])}"
         )
+        permitted_claim = f"{claim_label(row)}; {interpretation(row)}"
         md_lines.append(
             "| "
             + " | ".join(
@@ -324,9 +325,7 @@ def write_tables(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
                     str(row["gene_symbol"]),
                     str(row["gene_mapping_note"]),
                     score_text,
-                    str(row["dominant_cross_disease_axis"]),
-                    claim_label(row),
-                    interpretation(row),
+                    permitted_claim,
                     caution(row),
                 ]
             )
@@ -465,7 +464,7 @@ def plot_figure(df: pd.DataFrame) -> None:
         color=PALETTE["neutral_mid"],
     )
 
-    fig.suptitle("Druggability-aware experimental-hypothesis triage", fontsize=11, x=0.52, y=0.985)
+    fig.suptitle("Perturbability-aware model-system hypothesis triage", fontsize=11, x=0.52, y=0.985)
     fig.savefig(OUT_FIG_SVG)
     fig.savefig(OUT_FIG_PNG, dpi=300)
     plt.close(fig)

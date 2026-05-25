@@ -256,6 +256,10 @@ def selected_evidence(row: pd.Series) -> str:
 
 def claim_label(row: pd.Series) -> str:
     gene = str(row["gene_symbol"])
+    if gene == "KDM1A":
+        return "Primary model-system hypothesis; not causal proof"
+    if gene == "PDGFRA":
+        return "Primary fibrovascular-stromal follow-up hypothesis"
     if gene == "LY96":
         return "Pathway-level hypothesis"
     if gene == "KDR":

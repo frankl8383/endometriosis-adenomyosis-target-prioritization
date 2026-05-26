@@ -22,7 +22,7 @@ PY_PKG_DIR = PROJECT_ROOT / "tools" / "py_packages"
 if sys.version_info[:2] != (3, 12):
     raise SystemExit(
         "Use the bundled Python 3.12 runtime: "
-        "python3 "
+        "/Users/doctorliu/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 "
         "scripts/make_phase18_figures1_5.py"
     )
 
@@ -55,11 +55,11 @@ PALETTE = {
 }
 
 FIGURE_PATHS = {
-    "figure1": (FIGURES / "figure1_study_design_audit.svg", FIGURES / "figure1_study_design_audit.png"),
-    "figure2": (FIGURES / "figure2_genetic_candidate_universe.svg", FIGURES / "figure2_genetic_candidate_universe.png"),
-    "figure3": (FIGURES / "figure3_bulk_expression_support.svg", FIGURES / "figure3_bulk_expression_support.png"),
+    "figure1": (FIGURES / "figure1_public_data_layers.svg", FIGURES / "figure1_public_data_layers.png"),
+    "figure2": (FIGURES / "figure2_gwas_candidate_set.svg", FIGURES / "figure2_gwas_candidate_set.png"),
+    "figure3": (FIGURES / "figure3_bulk_expression_context.svg", FIGURES / "figure3_bulk_expression_context.png"),
     "figure4": (FIGURES / "figure4_singlecell_celllabel_context.svg", FIGURES / "figure4_singlecell_celllabel_context.png"),
-    "figure5": (FIGURES / "figure5_cross_disease_convergence.svg", FIGURES / "figure5_cross_disease_convergence.png"),
+    "figure5": (FIGURES / "figure5_cross_disease_cell_context.svg", FIGURES / "figure5_cross_disease_cell_context.png"),
 }
 CAPTIONS = FIGURES / "figure1_5_captions.md"
 SELF_REVIEW = INTEGRATION / "phase18_figures1_5_self_review.md"
@@ -69,7 +69,7 @@ def apply_publication_style() -> None:
     plt.rcParams["font.family"] = "sans-serif"
     plt.rcParams["font.sans-serif"] = ["Arial", "DejaVu Sans", "Liberation Sans"]
     plt.rcParams["svg.fonttype"] = "none"
-    plt.rcParams["font.size"] = 7.5
+    plt.rcParams["font.size"] = 7.2
     plt.rcParams["axes.spines.right"] = False
     plt.rcParams["axes.spines.top"] = False
     plt.rcParams["axes.linewidth"] = 0.8
@@ -83,8 +83,8 @@ def add_panel_label(ax: plt.Axes, label: str, x: float = -0.08, y: float = 1.03)
 
 def save_figure(fig: plt.Figure, name: str) -> None:
     svg, png = FIGURE_PATHS[name]
-    fig.savefig(svg)
-    fig.savefig(png, dpi=300)
+    fig.savefig(svg, bbox_inches="tight", pad_inches=0.04)
+    fig.savefig(png, dpi=600, bbox_inches="tight", pad_inches=0.04)
     plt.close(fig)
 
 
@@ -120,7 +120,7 @@ def horizontal_bar(ax: plt.Axes, labels: list[str], values: list[float], colors:
     y = np.arange(len(labels))
     ax.barh(y, values, color=colors, edgecolor="white", linewidth=0.6)
     ax.set_yticks(y)
-    ax.set_yticklabels(labels)
+    ax.set_yticklabels(labels, fontsize=7)
     ax.invert_yaxis()
     ax.set_xlabel(xlabel)
     ax.grid(axis="x", color="#E4E4E4", linewidth=0.5)
@@ -128,10 +128,10 @@ def horizontal_bar(ax: plt.Axes, labels: list[str], values: list[float], colors:
 
 def draw_flow(ax: plt.Axes, nodes: list[tuple[str, str, str]]) -> None:
     ax.set_axis_off()
-    xs = np.linspace(0.06, 0.94, len(nodes))
+    xs = np.linspace(0.07, 0.93, len(nodes))
     y = 0.55
-    w = 0.145
-    h = 0.34
+    w = 0.128
+    h = 0.26
     for i, (title, subtitle, color) in enumerate(nodes):
         x = xs[i]
         box = FancyBboxPatch(
@@ -145,8 +145,8 @@ def draw_flow(ax: plt.Axes, nodes: list[tuple[str, str, str]]) -> None:
         )
         ax.add_patch(box)
         text_color = "white" if color in {PALETTE["genetics"], PALETTE["action"], PALETTE["fibro"]} else PALETTE["neutral_3"]
-        ax.text(x, y + 0.045, title, ha="center", va="center", fontsize=8, fontweight="bold", color=text_color)
-        ax.text(x, y - 0.075, subtitle, ha="center", va="center", fontsize=6.5, color=text_color)
+        ax.text(x, y + 0.04, title, ha="center", va="center", fontsize=6.9, fontweight="bold", color=text_color)
+        ax.text(x, y - 0.058, subtitle, ha="center", va="center", fontsize=5.8, color=text_color)
         if i < len(nodes) - 1:
             arrow = FancyArrowPatch(
                 (x + w / 2 + 0.006, y),
@@ -196,50 +196,50 @@ def make_figure1(s: dict[str, object]) -> None:
     menstrual_cells = int(43054)
     coord_rows = parse_md_int(r"SNP evidence rows:\s*([0-9,]+)", coord_md)
 
-    fig = plt.figure(figsize=(8.0, 5.5))
-    gs = fig.add_gridspec(3, 2, height_ratios=[1.0, 1.0, 1.0], left=0.17, right=0.96, top=0.87, bottom=0.11, hspace=0.64, wspace=0.46)
+    fig = plt.figure(figsize=(7.6, 5.2))
+    gs = fig.add_gridspec(3, 2, height_ratios=[0.9, 1.0, 1.0], left=0.18, right=0.97, top=0.93, bottom=0.12, hspace=0.62, wspace=0.48)
     ax_flow = fig.add_subplot(gs[0, :])
     nodes = [
         ("GWAS", "3 EUR files", PALETTE["genetics"]),
-        ("Mapped\nrsIDs", f"{coord_rows:,} rows", "#B8C8EA"),
-        ("Candidate\nuniverse", "102 records", "#DDE8F7"),
-        ("Bulk", "4 datasets", PALETTE["bulk"]),
+        ("Map SNPs", f"{coord_rows:,} rows", "#B8C8EA"),
+        ("Gene set", "102 records", "#DDE8F7"),
+        ("Bulk RNA", "4 datasets", PALETTE["bulk"]),
         ("scRNA", "3 resources", PALETTE["singlecell"]),
-        ("Hypothesis\ntriage", "rank + safety", PALETTE["action"]),
+        ("Final list", "ranked", PALETTE["action"]),
     ]
     draw_flow(ax_flow, nodes)
     ax_flow.text(0.01, 0.97, "a", transform=ax_flow.transAxes, fontsize=10, fontweight="bold", va="top")
-    ax_flow.text(0.5, 0.98, "Genetics-first ordered evidence gates", ha="center", va="top", transform=ax_flow.transAxes, fontsize=10)
+    ax_flow.text(0.5, 0.98, "Analysis flow", ha="center", va="top", transform=ax_flow.transAxes, fontsize=9)
 
     ax_gwas = fig.add_subplot(gs[1, 0])
-    labels = ["Adenomyosis", "Endometriosis", "Endometriosis\nwithout adenomyosis"]
+    labels = ["Adenomyosis", "Endometriosis", "Endometriosis\nno adenomyosis"]
     values = [float(v) / 1e6 for v in gwas["rows"]]
     colors = [PALETTE["genetics"], "#7895D2", "#A5B6E3"]
     horizontal_bar(ax_gwas, labels, values, colors, "SNP rows (millions)")
-    ax_gwas.set_title("GWAS inputs")
+    ax_gwas.set_title("GWAS")
     add_panel_label(ax_gwas, "b")
 
     ax_bulk = fig.add_subplot(gs[1, 1])
     labels = bulk_meta["dataset"].astype(str).tolist()
     values = pd.to_numeric(bulk_meta["matched_samples"], errors="coerce").tolist()
     horizontal_bar(ax_bulk, labels, values, [PALETTE["bulk"]] * len(labels), "Matched samples")
-    ax_bulk.set_title("Bulk transcriptome inputs")
+    ax_bulk.set_title("Bulk RNA")
     add_panel_label(ax_bulk, "c")
 
     ax_sc = fig.add_subplot(gs[2, 0])
-    labels = ["GSE179640\nendo scRNA", "Zenodo 17078290\nadeno scRNA", "GSE203191\nmenstrual effluent"]
+    labels = ["GSE179640\nendometriosis", "Zenodo 17078290\nadenomyosis", "GSE203191\nmenstrual effluent"]
     values = [gse179640_cells / 1000, zenodo_cells / 1000, menstrual_cells / 1000]
     horizontal_bar(ax_sc, labels, values, [PALETTE["singlecell"], "#E4B965", "#ECCE90"], "Cells (thousands)")
-    ax_sc.set_title("Single-cell resources")
+    ax_sc.set_title("Single-cell")
     add_panel_label(ax_sc, "d")
 
     ax_guard = fig.add_subplot(gs[2, 1])
     ax_guard.set_axis_off()
     guard_items = [
-        ("GWAS", "coordinate-window\ncandidates"),
-        ("Bulk", "candidate-level\nmodels"),
-        ("scRNA", "broad labels /\ndonor-aware support"),
-        ("Adenomyosis\nh5ad", "scRNA only;\nno spatial coordinates"),
+        ("GWAS", "regional\ncandidates"),
+        ("Bulk", "candidate\nmodels"),
+        ("scRNA", "cell labels\nand donor tests"),
+        ("h5ad", "single-cell\nno spatial map"),
     ]
     y0 = 0.84
     for i, (left, right) in enumerate(guard_items):
@@ -262,8 +262,7 @@ def make_figure1(s: dict[str, object]) -> None:
         data_rows.append({"panel": "singlecell_cells", "resource": resource, "value": int(value), "unit": "cells"})
     data_rows.append({"panel": "coordinate_mapping", "resource": "rsID evidence rows", "value": int(coord_rows), "unit": "rows"})
     data = pd.DataFrame(data_rows)
-    data.to_csv(FIGURES / "figure1_study_design_audit_data.tsv", sep="\t", index=False)
-    fig.suptitle("Audited public resources and evidence gates", fontsize=12, y=0.975)
+    data.to_csv(FIGURES / "figure1_public_data_layers_data.tsv", sep="\t", index=False)
     save_figure(fig, "figure1")
 
 
@@ -275,23 +274,23 @@ def make_figure2(s: dict[str, object]) -> None:
     gw = neighborhoods[neighborhoods["threshold"] == "genome_wide"]
     ld_gw = ld[ld["threshold"] == "genome_wide"]
 
-    fig = plt.figure(figsize=(7.2, 5.6))
-    gs = fig.add_gridspec(2, 2, left=0.10, right=0.96, top=0.91, bottom=0.12, hspace=0.48, wspace=0.38)
+    fig = plt.figure(figsize=(7.4, 5.0))
+    gs = fig.add_gridspec(2, 2, left=0.22, right=0.97, top=0.94, bottom=0.14, hspace=0.58, wspace=0.45)
 
     ax1 = fig.add_subplot(gs[0, 0])
-    labels = ["Adenomyosis", "Endometriosis", "Endometriosis\nwithout adeno"]
+    labels = ["Adenomyosis", "Endometriosis", "Endometriosis\nno adenomyosis"]
     values = pd.to_numeric(gwas["genome_wide_snps_p_lt_5e_8"], errors="coerce").tolist()
-    horizontal_bar(ax1, labels, values, [PALETTE["genetics"], "#7895D2", "#A5B6E3"], "SNPs at P < 5 x 10^-8")
+    horizontal_bar(ax1, labels, values, [PALETTE["genetics"], "#7895D2", "#A5B6E3"], "Genome-wide SNPs")
     ax1.set_xscale("log")
-    ax1.set_title("Genome-wide SNP signals")
+    ax1.set_title("GWAS signals")
     add_panel_label(ax1, "a")
 
     ax2 = fig.add_subplot(gs[0, 1])
-    cats = ["All", "Shared by\n>=2 phenotypes", "All 3"]
+    cats = ["All", "Shared in\n2 or more", "All three"]
     vals = [len(gw), int((gw["n_phenotypes"] >= 2).sum()), int((gw["n_phenotypes"] == 3).sum())]
     ax2.bar(cats, vals, color=[PALETTE["neutral_2"], PALETTE["genetics"], PALETTE["action"]], edgecolor="white")
-    ax2.set_ylabel("Coordinate-window neighborhoods")
-    ax2.set_title("Shared region construction")
+    ax2.set_ylabel("Regions")
+    ax2.set_title("Shared regions")
     for i, v in enumerate(vals):
         ax2.text(i, v + max(vals) * 0.03, str(v), ha="center", va="bottom", fontsize=8)
     add_panel_label(ax2, "b")
@@ -299,11 +298,11 @@ def make_figure2(s: dict[str, object]) -> None:
     ax3 = fig.add_subplot(gs[1, 0])
     class_order = ["same_lead_snp_supported", "high_ld_supported", "moderate_ld_supported", "weak_or_distinct_ld"]
     vals = [int((ld_gw["ld_neighborhood_class"] == c).sum()) for c in class_order]
-    labels = ["Same lead", "High LD", "Moderate LD", "Weak/distinct"]
+    labels = ["Same lead", "High LD", "Moderate", "Weak"]
     ax3.bar(labels, vals, color=[PALETTE["action"], PALETTE["genetics"], PALETTE["singlecell"], PALETTE["neutral_2"]], edgecolor="white")
-    ax3.set_ylabel("Shared neighborhoods")
-    ax3.tick_params(axis="x", rotation=25)
-    ax3.set_title("LD sensitivity classes")
+    ax3.set_ylabel("Regions")
+    ax3.tick_params(axis="x", rotation=22)
+    ax3.set_title("LD classes")
     for i, v in enumerate(vals):
         ax3.text(i, v + 0.08, str(v), ha="center", va="bottom", fontsize=8)
     add_panel_label(ax3, "c")
@@ -316,10 +315,10 @@ def make_figure2(s: dict[str, object]) -> None:
     ]
     counts = universe["genetic_priority"].value_counts().to_dict()
     vals = [counts.get(k, 0) for k in priority_order]
-    labels = ["Tier 1\nLD-supported", "Tier 2\nmoderate LD", "Tier 3\nweak/unresolved"]
+    labels = ["Tier 1\nLD support", "Tier 2\nmoderate", "Tier 3\nweak"]
     ax4.bar(labels, vals, color=[PALETTE["genetics"], "#8CA4D9", PALETTE["neutral_1"]], edgecolor="white")
-    ax4.set_ylabel("Candidate records")
-    ax4.set_title("Genetics-derived universe")
+    ax4.set_ylabel("Records")
+    ax4.set_title("Candidate set")
     for i, v in enumerate(vals):
         ax4.text(i, v + 1.5, str(v), ha="center", va="bottom", fontsize=8)
     add_panel_label(ax4, "d")
@@ -329,35 +328,34 @@ def make_figure2(s: dict[str, object]) -> None:
             "metric": ["gw_snp_adenomyosis", "gw_snp_endometriosis", "gw_snp_endo_wo_adeno", "neighborhood_all", "neighborhood_shared2", "neighborhood_all3", "tier1", "tier2", "tier3"],
             "value": values + [len(gw), int((gw["n_phenotypes"] >= 2).sum()), int((gw["n_phenotypes"] == 3).sum())] + vals,
         }
-    ).to_csv(FIGURES / "figure2_genetic_candidate_universe_data.tsv", sep="\t", index=False)
-    fig.suptitle("Coordinate-window GWAS mapping defines a constrained candidate universe", fontsize=12)
+    ).to_csv(FIGURES / "figure2_gwas_candidate_set_data.tsv", sep="\t", index=False)
     save_figure(fig, "figure2")
 
 
 def make_figure3(s: dict[str, object]) -> None:
     models = s["bulk_models"].copy()
     scores = s["bulk_scores"].copy()
-    selected = scores.sort_values("bulk_expression_support_score_20", ascending=False, kind="mergesort").head(15).copy()
+    selected = scores.sort_values("bulk_expression_support_score_20", ascending=False, kind="mergesort").head(12).copy()
 
-    fig = plt.figure(figsize=(8.2, 6.0))
-    gs = fig.add_gridspec(2, 2, left=0.31, right=0.96, top=0.90, bottom=0.13, hspace=0.55, wspace=0.38)
+    fig = plt.figure(figsize=(7.8, 5.8))
+    gs = fig.add_gridspec(2, 2, left=0.24, right=0.97, top=0.94, bottom=0.13, hspace=0.58, wspace=0.42)
 
     ax1 = fig.add_subplot(gs[0, 0])
     model_keep = models[models["analysis"].str.contains("GSE141549|GSE51981|GSE313775|GSE234354", regex=True)].copy()
     label_map = {
-        "GSE234354_cycle_stage_F_test": "GSE234354 cycle stage",
-        "GSE313775_endometriosis_vs_control_Th1": "GSE313775 Th1 disease",
-        "GSE313775_endometriosis_vs_control_Th1_17": "GSE313775 Th1/17 disease",
-        "GSE313775_endometriosis_vs_control_Th17": "GSE313775 Th17 disease",
-        "GSE313775_Th17_interaction_vs_Th1": "GSE313775 Th17 interaction",
-        "GSE313775_Th1_17_interaction_vs_Th1": "GSE313775 Th1/17 interaction",
-        "GSE141549_tissue_contrast_lesion-control_endometrium": "GSE141549 lesion vs control endometrium",
-        "GSE141549_tissue_contrast_lesion-patient_eutopic_endometrium": "GSE141549 lesion vs eutopic endometrium",
-        "GSE141549_tissue_contrast_patient_eutopic_endometrium-control_endometrium": "GSE141549 eutopic vs control endometrium",
-        "GSE141549_tissue_contrast_patient_peritoneum-control_peritoneum": "GSE141549 peritoneum disease",
-        "GSE141549_tissue_contrast_lesion-patient_peritoneum": "GSE141549 lesion vs peritoneum",
-        "GSE51981_Endometriosis_vs_Non_Endometriosis_adjusted_cycle_all_mapped_probes": "GSE51981 disease, all probes",
-        "GSE51981_Endometriosis_vs_Non_Endometriosis_adjusted_cycle_single_gene_probes": "GSE51981 disease, single-gene probes",
+        "GSE234354_cycle_stage_F_test": "Cycle reference",
+        "GSE313775_endometriosis_vs_control_Th1": "Th1 cells",
+        "GSE313775_endometriosis_vs_control_Th1_17": "Th1-17 cells",
+        "GSE313775_endometriosis_vs_control_Th17": "Th17 cells",
+        "GSE313775_Th17_interaction_vs_Th1": "Th17 interaction",
+        "GSE313775_Th1_17_interaction_vs_Th1": "Th1-17 interaction",
+        "GSE141549_tissue_contrast_lesion-control_endometrium": "Lesion vs control",
+        "GSE141549_tissue_contrast_lesion-patient_eutopic_endometrium": "Lesion vs eutopic",
+        "GSE141549_tissue_contrast_patient_eutopic_endometrium-control_endometrium": "Eutopic vs control",
+        "GSE141549_tissue_contrast_patient_peritoneum-control_peritoneum": "Peritoneum disease",
+        "GSE141549_tissue_contrast_lesion-patient_peritoneum": "Lesion vs peritoneum",
+        "GSE51981_Endometriosis_vs_Non_Endometriosis_adjusted_cycle_all_mapped_probes": "GSE51981 all probes",
+        "GSE51981_Endometriosis_vs_Non_Endometriosis_adjusted_cycle_single_gene_probes": "GSE51981 single probes",
     }
     model_keep["short"] = model_keep["analysis"].map(label_map).fillna(model_keep["analysis"].astype(str))
     model_keep = model_keep.sort_values("fdr_lt_0_10", ascending=True).tail(9)
@@ -366,9 +364,9 @@ def make_figure3(s: dict[str, object]) -> None:
         model_keep["short"].tolist(),
         pd.to_numeric(model_keep["fdr_lt_0_10"], errors="coerce").tolist(),
         [PALETTE["bulk"]] * len(model_keep),
-        "Candidates with FDR < 0.10",
+        "Genes (FDR < 0.10)",
     )
-    ax1.set_title("Candidate-level bulk model support")
+    ax1.set_title("Bulk contrasts")
     add_panel_label(ax1, "a")
 
     ax2 = fig.add_subplot(gs[0, 1])
@@ -377,7 +375,7 @@ def make_figure3(s: dict[str, object]) -> None:
     vals = [counts.get(k, 0) for k in class_order]
     ax2.bar(["High", "Moderate", "Limited"], vals, color=[PALETTE["action"], PALETTE["bulk"], PALETTE["neutral_1"]], edgecolor="white")
     ax2.set_ylabel("Genes")
-    ax2.set_title("Bulk evidence classes")
+    ax2.set_title("Bulk classes")
     for i, v in enumerate(vals):
         ax2.text(i, v + 1.2, str(v), ha="center", fontsize=8)
     add_panel_label(ax2, "b")
@@ -390,12 +388,12 @@ def make_figure3(s: dict[str, object]) -> None:
     ax3.set_yticks(np.arange(len(selected)))
     ax3.set_yticklabels(selected["gene_symbol"].tolist(), fontsize=6.5)
     ax3.set_xticks(np.arange(len(heat_cols)))
-    ax3.set_xticklabels(["Lesion", "GSE51981", "Immune", "Low cycle\nconfounding"], fontsize=6.5)
+    ax3.set_xticklabels(["Lesion", "GSE51981", "Immune", "Cycle\nindependent"], fontsize=6.5)
     ax3.tick_params(length=0)
-    ax3.set_title("Top bulk-supported candidates")
+    ax3.set_title("Top bulk genes")
     add_panel_label(ax3, "c")
     cbar = fig.colorbar(im, ax=ax3, fraction=0.046, pad=0.02)
-    cbar.set_label("Scaled support", fontsize=7)
+    cbar.set_label("Score", fontsize=7)
     cbar.ax.tick_params(labelsize=6)
 
     ax4 = fig.add_subplot(gs[1, 1])
@@ -404,13 +402,28 @@ def make_figure3(s: dict[str, object]) -> None:
     cycle = selected["cycle_driven_flag"].astype(str) == "True"
     colors = np.where(cycle, PALETTE["warning"], PALETTE["bulk"])
     ax4.scatter(x, y, s=45 + 4 * pd.to_numeric(selected["bulk_expression_support_score_20"], errors="coerce"), c=colors, edgecolor="white", linewidth=0.5)
-    for _, row in selected.head(10).iterrows():
-        ax4.text(float(row["lesion_logFC"]) + 0.025, float(row["immune_logFC"]) + 0.035, str(row["gene_symbol"]), fontsize=6.1, ha="left", va="bottom")
+    label_offsets = {
+        "KDR": (0.05, 0.14),
+        "SSPN": (0.04, 0.12),
+        "HSPG2": (0.05, 0.10),
+        "KIT": (0.05, -0.02),
+        "C1QA": (0.05, 0.08),
+        "C1QC": (0.05, 0.08),
+        "SLC6A1": (0.05, 0.10),
+        "KDM1A": (0.05, 0.10),
+        "ARMT1": (0.05, -0.10),
+    }
+    for _, row in selected.iterrows():
+        gene = str(row["gene_symbol"])
+        if gene not in label_offsets:
+            continue
+        dx, dy = label_offsets[gene]
+        ax4.text(float(row["lesion_logFC"]) + dx, float(row["immune_logFC"]) + dy, gene, fontsize=5.9, ha="left", va="bottom")
     ax4.axhline(0, color="#CFCFCF", lw=0.7)
     ax4.axvline(0, color="#CFCFCF", lw=0.7)
     ax4.set_xlabel("Lesion logFC")
     ax4.set_ylabel("Immune-cell logFC")
-    ax4.set_title("Direction and cycle sensitivity")
+    ax4.set_title("Direction and cycle")
     legend_handles = [
         Line2D([0], [0], marker="o", linestyle="", color=PALETTE["warning"], label="Cycle-sensitive"),
         Line2D([0], [0], marker="o", linestyle="", color=PALETTE["bulk"], label="Lower cycle flag"),
@@ -418,8 +431,7 @@ def make_figure3(s: dict[str, object]) -> None:
     ax4.legend(handles=legend_handles, fontsize=6.5, loc="best")
     add_panel_label(ax4, "d")
 
-    selected.to_csv(FIGURES / "figure3_bulk_expression_support_data.tsv", sep="\t", index=False)
-    fig.suptitle("Candidate-level bulk expression support across lesion, immune and cycle-control layers", fontsize=12)
+    selected.to_csv(FIGURES / "figure3_bulk_expression_context_data.tsv", sep="\t", index=False)
     save_figure(fig, "figure3")
 
 
@@ -431,25 +443,25 @@ def make_figure4(s: dict[str, object]) -> None:
 
     comp_counts = parse_literal_counts("Broad-compartment totals", gse179640_md)
     main_comps = {
-        "Stromal/\nfibroblast": comp_counts.get("stromal_fibroblast", 0),
-        "T/NK": comp_counts.get("t_nk", 0),
+        "Stromal\nfibroblast": comp_counts.get("stromal_fibroblast", 0),
+        "T and NK": comp_counts.get("t_nk", 0),
         "Epithelial": comp_counts.get("epithelial", 0),
-        "Myeloid/\nmacrophage": comp_counts.get("myeloid_macrophage", 0),
+        "Myeloid\nmacrophage": comp_counts.get("myeloid_macrophage", 0),
         "Endothelial": comp_counts.get("endothelial", 0),
-        "Mural/\nsmooth muscle": comp_counts.get("mural_smooth_muscle", 0),
+        "Mural\nsmooth muscle": comp_counts.get("mural_smooth_muscle", 0),
     }
     v2_counts = parse_literal_counts("Integrated class counts", gse179640_v2_md)
     z_counts = parse_literal_counts("Localization class counts", zenodo_md)
 
-    fig = plt.figure(figsize=(8.0, 6.0))
-    gs = fig.add_gridspec(2, 2, left=0.17, right=0.96, top=0.90, bottom=0.12, hspace=0.50, wspace=0.42)
+    fig = plt.figure(figsize=(7.8, 5.8))
+    gs = fig.add_gridspec(2, 2, left=0.20, right=0.97, top=0.94, bottom=0.12, hspace=0.55, wspace=0.43)
     ax1 = fig.add_subplot(gs[0, 0])
     horizontal_bar(ax1, list(main_comps.keys()), [v / 1000 for v in main_comps.values()], [PALETTE["singlecell"]] * len(main_comps), "Cells (thousands)")
-    ax1.set_title("GSE179640 broad compartments")
+    ax1.set_title("Endometriosis compartments")
     add_panel_label(ax1, "a")
 
     ax2 = fig.add_subplot(gs[0, 1])
-    labels = ["Moderate\nrelaxed", "Moderate\ndonor-aware", "Suggestive", "Limited", "Minimal"]
+    labels = ["Moderate", "Donor test", "Suggestive", "Limited", "Minimal"]
     vals = [
         v2_counts.get("moderate_relaxed_fdr_singlecell_support", 0),
         v2_counts.get("moderate_donor_aware_singlecell_support", 0),
@@ -457,12 +469,10 @@ def make_figure4(s: dict[str, object]) -> None:
         v2_counts.get("limited_singlecell_support", 0),
         v2_counts.get("minimal_singlecell_support", 0),
     ]
-    ax2.bar(labels, vals, color=[PALETTE["singlecell"], "#E6BD72", "#F0D49A", PALETTE["neutral_1"], PALETTE["neutral_2"]], edgecolor="white")
-    ax2.set_ylabel("Genes")
-    ax2.set_title("Endometriosis scRNA support")
-    ax2.tick_params(axis="x", rotation=20)
+    horizontal_bar(ax2, labels, vals, [PALETTE["singlecell"], "#E6BD72", "#F0D49A", PALETTE["neutral_1"], PALETTE["neutral_2"]], "Genes")
+    ax2.set_title("Endometriosis genes")
     for i, v in enumerate(vals):
-        ax2.text(i, v + 0.8, str(v), ha="center", fontsize=8)
+        ax2.text(v + 0.7, i, str(v), va="center", fontsize=8)
     add_panel_label(ax2, "b")
 
     ax3 = fig.add_subplot(gs[1, 0])
@@ -474,12 +484,10 @@ def make_figure4(s: dict[str, object]) -> None:
         z_counts.get("minimal_adenomyosis_scRNA_localization", 0),
         z_counts.get("not_detected_or_unmatched", 0),
     ]
-    ax3.bar(labels, vals, color=[PALETTE["singlecell"], "#E6BD72", "#F0D49A", PALETTE["neutral_1"], PALETTE["neutral_2"]], edgecolor="white")
-    ax3.set_ylabel("Genes")
-    ax3.set_title("Adenomyosis h5ad cell-label context\nn=3/group; no spatial coordinates")
-    ax3.tick_params(axis="x", rotation=20)
+    horizontal_bar(ax3, labels, vals, [PALETTE["singlecell"], "#E6BD72", "#F0D49A", PALETTE["neutral_1"], PALETTE["neutral_2"]], "Genes")
+    ax3.set_title("Adenomyosis h5ad")
     for i, v in enumerate(vals):
-        ax3.text(i, v + 1.0, str(v), ha="center", fontsize=8)
+        ax3.text(v + 0.9, i, str(v), va="center", fontsize=8)
     add_panel_label(ax3, "c")
 
     ax4 = fig.add_subplot(gs[1, 1])
@@ -497,11 +505,11 @@ def make_figure4(s: dict[str, object]) -> None:
         linewidth=0.6,
     )
     callout_positions = {
-        "KDR": (20.15, 19.35),
-        "ECE1": (20.35, 18.95),
-        "SSPN": (20.35, 18.55),
-        "LY96": (20.35, 18.15),
-        "KDM1A": (20.10, 17.55),
+        "KDR": (20.45, 19.55),
+        "ECE1": (21.05, 19.15),
+        "SSPN": (21.10, 18.75),
+        "LY96": (21.05, 18.35),
+        "KDM1A": (20.75, 17.55),
     }
     label_offsets = {
         "HSPG2": (0.16, 0.12),
@@ -519,17 +527,17 @@ def make_figure4(s: dict[str, object]) -> None:
                 xy=(x0, y0),
                 xytext=callout_positions[gene],
                 textcoords="data",
-                fontsize=6.2,
+                fontsize=5.9,
                 arrowprops=dict(arrowstyle="-", color="#9A9A9A", lw=0.5, shrinkA=2, shrinkB=2),
             )
         else:
             dx, dy = label_offsets.get(gene, (0.12, 0.08))
             ax4.text(x0 + dx, y0 + dy, gene, fontsize=6.4)
-    ax4.set_xlim(10, 22.2)
+    ax4.set_xlim(10, 23.0)
     ax4.set_ylim(10, 20.8)
     ax4.set_xlabel("Endometriosis scRNA context score")
     ax4.set_ylabel("Adenomyosis cell-label context score")
-    ax4.set_title("Cross-disease candidate context")
+    ax4.set_title("Cross-disease scores")
     ax4.grid(color="#E4E4E4", lw=0.5)
     add_panel_label(ax4, "d")
 
@@ -568,7 +576,6 @@ def make_figure4(s: dict[str, object]) -> None:
             "pre_druggability_biologic_evidence_score_80",
         ]
     ].to_csv(FIGURES / "figure4_singlecell_candidate_scores.tsv", sep="\t", index=False)
-    fig.suptitle("Broad-compartment and h5ad cell-label context of candidate genes", fontsize=12)
     save_figure(fig, "figure4")
 
 
@@ -579,8 +586,8 @@ def make_figure5(s: dict[str, object]) -> None:
     axis_counts = parse_literal_counts("Dominant axis counts", cross_md)
     top = cross.sort_values("pre_druggability_biologic_evidence_score_80", ascending=False).head(16).copy()
 
-    fig = plt.figure(figsize=(7.2, 6.0))
-    gs = fig.add_gridspec(2, 2, left=0.10, right=0.97, top=0.91, bottom=0.13, hspace=0.50, wspace=0.38)
+    fig = plt.figure(figsize=(7.4, 5.8))
+    gs = fig.add_gridspec(2, 2, left=0.15, right=0.97, top=0.94, bottom=0.13, hspace=0.55, wspace=0.42)
 
     ax1 = fig.add_subplot(gs[0, 0])
     class_order = [
@@ -590,11 +597,12 @@ def make_figure5(s: dict[str, object]) -> None:
         "limited_or_single_layer_scRNA_localization",
         "minimal_scRNA_localization",
     ]
-    labels = ["Shared", "Adeno-\ndominant", "Endo-\ndominant", "Limited/\nsingle", "Minimal"]
+    labels = ["Shared", "Adenomyosis", "Endometriosis", "Limited", "Minimal"]
     vals = [class_counts.get(k, 0) for k in class_order]
     ax1.bar(labels, vals, color=[PALETTE["genetics"], "#87A1DD", "#C4A2C2", PALETTE["neutral_1"], PALETTE["neutral_2"]], edgecolor="white")
     ax1.set_ylabel("Genes")
-    ax1.set_title("Cross-disease scRNA context classes")
+    ax1.set_title("Cell-context classes")
+    ax1.tick_params(axis="x", rotation=18)
     for i, v in enumerate(vals):
         ax1.text(i, v + 1.0, str(v), ha="center", fontsize=8)
     add_panel_label(ax1, "a")
@@ -605,7 +613,7 @@ def make_figure5(s: dict[str, object]) -> None:
     colors = [PALETTE["fibro"], PALETTE["epithelial"], PALETTE["mixed"], PALETTE["immune"], PALETTE["neutral_1"]]
     ax2.bar(["Fibro-\nvascular", "Epithelial", "Mixed", "Immune", "None"], vals, color=colors, edgecolor="white")
     ax2.set_ylabel("Genes")
-    ax2.set_title("Dominant context axes")
+    ax2.set_title("Dominant axes")
     for i, v in enumerate(vals):
         ax2.text(i, v + 0.8, str(v), ha="center", fontsize=8)
     add_panel_label(ax2, "b")
@@ -623,12 +631,12 @@ def make_figure5(s: dict[str, object]) -> None:
     ax3.set_yticks(np.arange(len(top)))
     ax3.set_yticklabels(top["gene_symbol"].tolist(), fontsize=6.2)
     ax3.set_xticks(np.arange(4))
-    ax3.set_xticklabels(["Genetics", "Bulk", "scRNA", "Biological\nevidence"], fontsize=6.5)
+    ax3.set_xticklabels(["Genetic", "Bulk", "Single-cell", "Total"], fontsize=6.5)
     ax3.tick_params(length=0)
-    ax3.set_title("Top biological evidence genes")
+    ax3.set_title("Biological evidence")
     add_panel_label(ax3, "c")
     cbar = fig.colorbar(im, ax=ax3, fraction=0.046, pad=0.02)
-    cbar.set_label("Scaled evidence", fontsize=7)
+    cbar.set_label("Score", fontsize=7)
     cbar.ax.tick_params(labelsize=6)
 
     ax4 = fig.add_subplot(gs[1, 1])
@@ -641,11 +649,11 @@ def make_figure5(s: dict[str, object]) -> None:
     ax4.set_xticks(np.arange(3))
     ax4.set_xticklabels(["Fibro-\nvascular", "Immune", "Epithelial"], fontsize=6.5)
     ax4.tick_params(length=0)
-    ax4.set_title("Shared-axis flags")
+    ax4.set_title("Shared axes")
     ax4.text(
         0.5,
         -0.18,
-        "Filled cells indicate assigned axis support",
+        "Filled cells mark assigned support",
         transform=ax4.transAxes,
         ha="center",
         va="top",
@@ -654,23 +662,22 @@ def make_figure5(s: dict[str, object]) -> None:
     )
     add_panel_label(ax4, "d")
 
-    top.to_csv(FIGURES / "figure5_cross_disease_convergence_data.tsv", sep="\t", index=False)
-    fig.suptitle("Cross-disease cell-context overlap before actionability scoring", fontsize=12)
+    top.to_csv(FIGURES / "figure5_cross_disease_cell_context_data.tsv", sep="\t", index=False)
     save_figure(fig, "figure5")
 
 
 def write_captions() -> None:
-    text = """# Draft captions for Figures 1-5
+    text = """# Captions for Figures 1-5
 
-**Figure 1. Audited public-resource workflow for genetics-guided experimental-hypothesis prioritisation.** The analysis began with three EUR GWAS summary-statistic files and proceeded through coordinate-window candidate construction, candidate-level bulk expression support, single-cell or cell-label context evidence and model-system hypothesis triage. The adenomyosis h5ad was used as scRNA/cell-label evidence only because no usable spatial coordinates were detected; it is not spatial evidence.
+**Figure 1. Public data and analysis layers.** Three EUR GWAS files defined the regional candidate set. Bulk-expression, single-cell and drug-target resources were then used to place those candidates in tissue, cellular and experimental contexts. The adenomyosis h5ad was analysed as single-cell and cell-label evidence, not as spatial evidence.
 
-**Figure 2. Cross-phenotype GWAS mapping defines the candidate universe.** SNP-level signals were converted into coordinate-window neighbourhoods and then stratified by pairwise EUR LD sensitivity. The resulting 102 Ensembl gene records are coordinate-neighbourhood candidates, not locus-resolved causal genes or therapeutic targets.
+**Figure 2. GWAS-derived candidate set.** Genome-wide SNP signals were grouped into coordinate windows and compared across phenotypes. Pairwise EUR LD information was used to classify shared regions before protein-coding gene records were carried forward.
 
-**Figure 3. Candidate-level bulk expression support across lesion, immune and cycle-control layers.** Bulk models were restricted to the genetics-derived candidate universe. GSE234354 was used as a menstrual-cycle confounding-control layer rather than disease evidence.
+**Figure 3. Bulk expression context.** Candidate genes were examined across lesion, endometrium, immune-cell and menstrual-cycle datasets. The cycle-reference dataset was used to mark hormonally patterned expression.
 
-**Figure 4. Broad-compartment and h5ad cell-label context evidence across endometriosis and adenomyosis resources.** GSE179640 supports broad-compartment context evidence in endometriosis, while Zenodo 17078290 supports adenomyosis scRNA/cell-label context evidence. The adenomyosis h5ad layer has n=3 samples per group and no usable spatial coordinates in the local audit. These panels do not claim final cluster-level differential expression, and the adenomyosis h5ad is not spatial evidence.
+**Figure 4. Single-cell context.** GSE179640 was summarised by broad endometriosis compartments, and the adenomyosis h5ad was summarised by author cell labels. The adenomyosis h5ad has three samples per encoded group and is not spatial evidence.
 
-**Figure 5. Cross-resource cell-context overlap before targetability filtering.** The integrated cell-context matrix identifies broad fibrovascular, epithelial and immune candidate patterns that feed into Figure 6 scoring, where targetability, safety and directionality are added.
+**Figure 5. Cross-disease cell context.** Candidate genes were grouped by the strength and dominant compartment of their endometriosis and adenomyosis single-cell evidence. High biological context was kept separate from later perturbability review.
 """
     CAPTIONS.write_text(text, encoding="utf-8")
 
@@ -706,12 +713,12 @@ def write_self_review() -> tuple[str, list[str]]:
     if not CAPTIONS.exists() or "not spatial evidence" not in CAPTIONS.read_text(encoding="utf-8").lower():
         failures.append("Captions missing or lack adenomyosis not-spatial note.")
     required_data = [
-        FIGURES / "figure1_study_design_audit_data.tsv",
-        FIGURES / "figure2_genetic_candidate_universe_data.tsv",
-        FIGURES / "figure3_bulk_expression_support_data.tsv",
+        FIGURES / "figure1_public_data_layers_data.tsv",
+        FIGURES / "figure2_gwas_candidate_set_data.tsv",
+        FIGURES / "figure3_bulk_expression_context_data.tsv",
         FIGURES / "figure4_singlecell_celllabel_context_data.tsv",
         FIGURES / "figure4_singlecell_candidate_scores.tsv",
-        FIGURES / "figure5_cross_disease_convergence_data.tsv",
+        FIGURES / "figure5_cross_disease_cell_context_data.tsv",
     ]
     for path in required_data:
         if not path.exists() or path.stat().st_size == 0:
@@ -719,7 +726,7 @@ def write_self_review() -> tuple[str, list[str]]:
 
     status = "PASS" if not failures else "FAIL"
     lines = [
-        "# Phase 18 self-review: Figures 1-5 draft panels",
+        "# Phase 18 figure check: Figures 1-5",
         "",
         f"Status: {status}",
         "",
@@ -734,13 +741,13 @@ def write_self_review() -> tuple[str, list[str]]:
     lines.extend(
         [
             "",
-            "## Claim limits",
+            "## Checks",
             "",
-            "- Figure 1 separates evidence resources from interpretation gates.",
-            "- Figure 2 labels outputs as coordinate-window candidates rather than causal loci.",
-            "- Figure 3 is candidate-level bulk expression support rather than a genome-wide DEG figure.",
-            "- Figure 4 explicitly states adenomyosis h5ad is scRNA/cell-label evidence, not spatial evidence.",
-            "- Figure 5 feeds cell-context overlap into Figure 6 and does not present intervention candidates before targetability review.",
+            "- Figure 1 shows data sources and analysis order.",
+            "- Figure 2 shows coordinate-window GWAS mapping.",
+            "- Figure 3 shows candidate-level bulk expression context.",
+            "- Figure 4 states that the adenomyosis h5ad is single-cell/cell-label data, not spatial evidence.",
+            "- Figure 5 summarises cell-context patterns before final review.",
             "",
         ]
     )

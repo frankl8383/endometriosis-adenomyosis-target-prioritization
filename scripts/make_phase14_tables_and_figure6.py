@@ -19,7 +19,7 @@ PY_PKG_DIR = PROJECT_ROOT / "tools" / "py_packages"
 if sys.version_info[:2] != (3, 12):
     raise SystemExit(
         "Use the bundled Python 3.12 runtime: "
-        "python3 "
+        "/Users/doctorliu/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 "
         "scripts/make_phase14_tables_and_figure6.py"
     )
 
@@ -404,7 +404,7 @@ def plot_figure(df: pd.DataFrame) -> None:
     ax_bar.set_xlim(0, 100)
     ax_bar.grid(axis="x", color="#D8D8D8", linewidth=0.5)
     ax_bar.legend(loc="lower right", fontsize=7, ncols=1)
-    ax_bar.set_title("Layered evidence")
+    ax_bar.set_title("Evidence layers")
     add_panel_label(ax_bar, "a")
 
     heat_values = np.column_stack(
@@ -423,7 +423,7 @@ def plot_figure(df: pd.DataFrame) -> None:
     ax_heat.set_yticks(y)
     ax_heat.set_yticklabels(genes, fontsize=7)
     ax_heat.set_xticks([0, 1, 2])
-    ax_heat.set_xticklabels(["Boot\nTop10", "Layer\nrobust", "Perm.\nscore"], fontsize=7)
+    ax_heat.set_xticklabels(["Bootstrap", "Layer\nrobust", "Null\nscore"], fontsize=7)
     ax_heat.tick_params(length=0)
     ax_heat.set_title("Rank stability")
     add_panel_label(ax_heat, "b")
@@ -447,7 +447,7 @@ def plot_figure(df: pd.DataFrame) -> None:
     ax_cat.set_yticklabels(genes, fontsize=7)
     ax_cat.set_xticks([])
     ax_cat.set_xlim(0, 1)
-    ax_cat.set_title("Manual evidence class")
+    ax_cat.set_title("Follow-up class")
     add_panel_label(ax_cat, "c")
     for yi, use, color in zip(y, uses, cat_colors):
         text_color = "white" if use in {"primary", "pathway-level", "safety-limited", "secondary", "context"} else PALETTE["neutral_dark"]
@@ -457,20 +457,8 @@ def plot_figure(df: pd.DataFrame) -> None:
         for spine in ax.spines.values():
             spine.set_visible(False)
 
-    ax_cat.text(
-        0.02,
-        -0.12,
-        "Evidence class only; not a treatment recommendation",
-        transform=ax_cat.transAxes,
-        ha="left",
-        va="top",
-        fontsize=6.2,
-        color=PALETTE["neutral_mid"],
-    )
-
-    fig.suptitle("Perturbability-aware model-system hypothesis triage", fontsize=11, x=0.52, y=0.985)
     fig.savefig(OUT_FIG_SVG)
-    fig.savefig(OUT_FIG_PNG, dpi=300)
+    fig.savefig(OUT_FIG_PNG, dpi=600)
     plt.close(fig)
 
 

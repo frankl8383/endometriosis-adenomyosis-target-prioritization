@@ -458,7 +458,7 @@ def plot_figure(df: pd.DataFrame) -> None:
             spine.set_visible(False)
 
     fig.savefig(OUT_FIG_SVG)
-    fig.savefig(OUT_FIG_PNG, dpi=600)
+    fig.savefig(OUT_FIG_PNG, dpi=1200)
     plt.close(fig)
 
 

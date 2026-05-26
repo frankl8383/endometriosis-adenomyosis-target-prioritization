@@ -84,7 +84,7 @@ def add_panel_label(ax: plt.Axes, label: str, x: float = -0.08, y: float = 1.03)
 def save_figure(fig: plt.Figure, name: str) -> None:
     svg, png = FIGURE_PATHS[name]
     fig.savefig(svg, bbox_inches="tight", pad_inches=0.04)
-    fig.savefig(png, dpi=600, bbox_inches="tight", pad_inches=0.04)
+    fig.savefig(png, dpi=1200, bbox_inches="tight", pad_inches=0.04)
     plt.close(fig)
 
 
